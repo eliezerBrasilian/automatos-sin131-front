@@ -1,4 +1,4 @@
-import { InputItem } from "../App";
+import { InputItem } from "../types/InputItem";
 import { ButtonAdd } from "./BtnAdd";
 import { getCaracter } from "./TransicaoComponent";
 
@@ -17,8 +17,9 @@ export function AlfabetoComponent({
     <div style={{ marginTop: 30 }}>
       <p style={{ textAlign: "left" }}>Informe o alfabeto</p>
       <div style={{ display: "flex", columnGap: 10 }}>
-        {inputs.map((v) => (
+        {inputs.map((v, i) => (
           <input
+            key={i}
             style={{
               width: 40,
               height: 40,

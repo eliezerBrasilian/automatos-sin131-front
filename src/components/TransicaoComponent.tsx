@@ -1,4 +1,4 @@
-import { TransicaoItem } from "../App";
+import { TransicaoItem } from "../types/TransicaoItem";
 import { ButtonAdd } from "./BtnAdd";
 
 interface TransicaoComponentProps {
@@ -40,8 +40,8 @@ export function TransicaoComponent({
       <p style={{ textAlign: "left" }}>Informe a transição</p>
       <div style={{ display: "flex", columnGap: 10 }}>
         <div style={{ display: "flex", flexDirection: "column", rowGap: 5 }}>
-          {inputs.map((v) => (
-            <div style={{ display: "flex", columnGap: 5 }}>
+          {inputs.map((v, i) => (
+            <div key={i} style={{ display: "flex", columnGap: 5 }}>
               <input
                 style={{
                   width: 40,

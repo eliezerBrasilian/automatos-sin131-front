@@ -40,7 +40,7 @@
 }
 .btn_novaafn_container {
   width: 80vw;
-  margin-top: -300px;
+  margin-top: -40px;
   display: flex;
   justify-content: start;
 }
@@ -50,10 +50,26 @@
 }
 .coverterafd_container {
   width: 70vw;
-  margin-top: -100px;
   display: flex;
   justify-content: end;
 }
+
+.simular_container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  column-gap: 40px;
+}
+.input_palavra {
+  border: 1px solid #ffb4a2;
+  color: #fff;
+  padding: 5px;
+  border-radius: 20px;
+}
+.btn_simularafd {
+  background-color: #c1121f;
+}
+
 @media (max-width: 600px) {
   .item-btn {
     width: 100%;

@@ -13,8 +13,8 @@ export function EstadoInicial({ estadoInicial }: EstadoInicialProps) {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "#EF7674",
-          border: "1px solid white",
+          backgroundColor: "#c1121f",
+          border: "1px solid #780000",
         }}
       >
         <p>{estadoInicial}</p>

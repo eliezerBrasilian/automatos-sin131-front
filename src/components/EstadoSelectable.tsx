@@ -15,9 +15,10 @@ export function EstadoSelectable({
     <div style={{ marginTop: 30 }}>
       <p style={{ textAlign: "left" }}>Selecione o estado inicial</p>
       <div style={{ display: "flex", columnGap: 10 }}>
-        {estados.map((v) =>
+        {estados.map((v, i) =>
           v.value == "" ? null : (
             <button
+              key={i}
               style={{
                 width: 40,
                 height: 40,

@@ -10,7 +10,11 @@ export function MainContent(props: MainContentProps) {
       <div className="main_content">
         <div className="btns-div">
           <Item
-            text="Entrar com a AFN"
+            text={
+              props.afnContentInputIsVisible
+                ? "Converter AFN para AFD"
+                : "AFD resultante"
+            }
             onClick={props.convertAfnToAfd}
             isSelected={props.indexSelected == 0}
           />
@@ -68,29 +72,37 @@ export function MainContent(props: MainContentProps) {
               estadosDestinoSelecionados={props.estadosDestinoSelecionados}
             />
           )}
+          <div>
+            {props.indexSelected == 2 && (
+              <div>
+                <p>Digite a palavra</p>
+                <div className="simular_container">
+                  <input
+                    className="input_palavra"
+                    placeholder="digite a palavra..."
+                    value={props.palavra}
+                    onChange={(ev) => props.setPalavra(ev.target.value)}
+                  />
 
-          {props.indexSelected == 2 && (
-            <div>
-              <p>Digite a palavra</p>
-              <input
-                placeholder="digite a palavra..."
-                value={props.palavra}
-                onChange={(ev) => props.setPalavra(ev.target.value)}
-              />
-
-              <button onClick={props.simulateAccepting}>Simular AFD</button>
-
-              {props.afdAccepted != undefined && (
-                <div>
-                  <p>
-                    {props.afdAccepted == true
-                      ? "Palavra aceita na AFD"
-                      : "Palavra rejeitatada na AFD"}
-                  </p>
+                  <button
+                    className="btn_simularafd"
+                    onClick={props.simulateAccepting}
+                  >
+                    Simular AFD
+                  </button>
                 </div>
-              )}
-            </div>
-          )}
+                {props.afdAccepted != undefined && (
+                  <div>
+                    <p>
+                      {props.afdAccepted == true
+                        ? "Palavra aceita na AFD"
+                        : "Palavra rejeitatada na AFD"}
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
 
           {props.afd != undefined &&
             props.indexSelected != 2 &&
@@ -111,8 +123,8 @@ export function MainContent(props: MainContentProps) {
                         title="AFD Minimizado"
                         alfabeto={props.afd.alfabeto}
                         estadoInicial={props.estadoInicial}
-                        estadosFinais={props.afd.estadosFinais}
-                        transicoes={props.afd.conjuntoTransicoes}
+                        estadosFinais={props.afdMinimized.estadosFinais}
+                        transicoes={props.afdMinimized.conjuntoTransicoes}
                       />
                     </div>
                   )}
@@ -137,7 +149,7 @@ export function MainContent(props: MainContentProps) {
                 <p>
                   {props.afnAccepted
                     ? "Palavra aceita na AFN"
-                    : "Palavra rejeitatada na AFN"}
+                    : "Palavra rejeitada na AFN"}
                 </p>
               </div>
             )}
@@ -158,16 +170,29 @@ export function MainContent(props: MainContentProps) {
       </div>
       <div className="coverterafd_container">
         {props.afnContentInputIsVisible && (
-          <button
-            style={{
-              marginTop: 30,
-              fontSize: 14,
-              backgroundColor: "#DA344D",
-            }}
-            onClick={props.handleClickConvertAfnToAfd}
-          >
-            Converter para AFD
-          </button>
+          <div>
+            <button
+              style={{
+                marginTop: 30,
+                fontSize: 14,
+                backgroundColor: "#DA344D",
+              }}
+              onClick={props.handleClickConvertAfnToAfd}
+            >
+              Converter para AFD
+            </button>
+            <button
+              style={{
+                marginTop: 30,
+                fontSize: 14,
+                backgroundColor: "#16697A",
+                marginLeft: 20,
+              }}
+              onClick={props.clickFillAutomato}
+            >
+              Preencher autômato automaticamente
+            </button>
+          </div>
         )}
       </div>
     </div>

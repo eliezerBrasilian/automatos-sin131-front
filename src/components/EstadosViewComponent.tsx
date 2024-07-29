@@ -12,13 +12,13 @@ export function EstadosViewComponent({ estados }: EstadosViewComponentProps) {
         {estados?.map((v) => (
           <div
             style={{
-              width: 30,
+              minWidth: 60,
               height: 30,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              backgroundColor: "#EF7674",
-              border: "1px solid white",
+              backgroundColor: "#c1121f",
+              border: "1px solid #780000",
             }}
           >
             <p>{v.nome}</p>

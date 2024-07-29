@@ -35,6 +35,7 @@ export function AfdResultanteComponent({
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            fontSize: 12,
           }}
         >
           <p>{isAccepted}</p>

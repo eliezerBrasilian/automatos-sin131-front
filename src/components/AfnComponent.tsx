@@ -1,63 +1,14 @@
-import { EstadoItem, InputItem, TransicaoItem } from "../App";
+import { AfnComponentProps } from "../types/AfnComponentProps";
 import { AlfabetoComponent } from "./AlfabetoComponent";
 import { EstadosComponent } from "./EstadosComponent";
 import { EstadoSelectable } from "./EstadoSelectable";
 import { EstadosSelectable } from "./EstadosSelectable";
 import { TransicaoComponent } from "./TransicaoComponent";
 
-interface AfnComponentProps {
-  indexSelected: number;
-  palavra: string;
-  estadoInicial: string;
-  alfabetoInputs: InputItem[];
-  estadosInputs: InputItem[];
-  transicaoInputs: TransicaoItem[];
-  estadosDestinoSelecionados: EstadoItem[];
-  setPalavra: React.Dispatch<React.SetStateAction<string>>;
-  handleInputChange: (id: number, value: string) => void;
-  handleAddInput: () => void;
-  handleAlfabetoInputChange: (id: number, value: string) => void;
-  handleAddAlfabetoInput: () => void;
-  handleTransicaoEstadoAtualInputChange: (
-    id: number,
-    estadoAtualValue: string
-  ) => void;
-  handleTransicaoSimboloInputChange: (
-    id: number,
-    simboloEntradaValue: string
-  ) => void;
-  handleTransicaoEstadoDestinoInputChange: (
-    id: number,
-    estadoDestinoValue: string
-  ) => void;
-  handleAddTransicaoInput: () => void;
-  handleEstadoInicialChange: (value: string) => void;
-  handleEstadoDestinoChange: (id: number, value: string) => void;
-}
-
-export function AfnComponent({
-  indexSelected,
-  palavra,
-  setPalavra,
-  estadosInputs,
-  handleAddInput,
-  handleInputChange,
-  alfabetoInputs,
-  handleAddAlfabetoInput,
-  transicaoInputs,
-  handleTransicaoEstadoAtualInputChange,
-  handleAlfabetoInputChange,
-  handleTransicaoSimboloInputChange,
-  handleTransicaoEstadoDestinoInputChange,
-  handleAddTransicaoInput,
-  handleEstadoInicialChange,
-  estadoInicial,
-  handleEstadoDestinoChange,
-  estadosDestinoSelecionados,
-}: AfnComponentProps) {
+export function AfnComponent(props: AfnComponentProps) {
   return (
     <div>
-      {indexSelected == 2 && (
+      {props.indexSelected == 2 && (
         <div
           style={{
             display: "flex",
@@ -69,49 +20,51 @@ export function AfnComponent({
           <p>Digite a palavra</p>
           <input
             placeholder="Digite a palavra"
-            value={palavra}
-            onChange={(ev) => setPalavra(ev.target.value)}
+            value={props.palavra}
+            onChange={(ev) => props.setPalavra(ev.target.value)}
           />
         </div>
       )}
 
       <div className="estado-alfabeto-row">
         <EstadosComponent
-          inputs={estadosInputs}
-          handleAddInput={handleAddInput}
-          handleInputChange={handleInputChange}
+          inputs={props.estadosInputs}
+          handleAddInput={props.handleAddInput}
+          handleInputChange={props.handleInputChange}
         />
         <AlfabetoComponent
-          inputs={alfabetoInputs}
-          handleAddInput={handleAddAlfabetoInput}
-          handleInputChange={handleAlfabetoInputChange}
+          inputs={props.alfabetoInputs}
+          handleAddInput={props.handleAddAlfabetoInput}
+          handleInputChange={props.handleAlfabetoInputChange}
         />
       </div>
 
       <TransicaoComponent
-        inputs={transicaoInputs}
+        inputs={props.transicaoInputs}
         handleTransicaoEstadoAtualInputChange={
-          handleTransicaoEstadoAtualInputChange
+          props.handleTransicaoEstadoAtualInputChange
         }
-        handleTransicaoSimboloInputChange={handleTransicaoSimboloInputChange}
+        handleTransicaoSimboloInputChange={
+          props.handleTransicaoSimboloInputChange
+        }
         handleTransicaoEstadoDestinoInputChange={
-          handleTransicaoEstadoDestinoInputChange
+          props.handleTransicaoEstadoDestinoInputChange
         }
-        handleAddInput={handleAddTransicaoInput}
+        handleAddInput={props.handleAddTransicaoInput}
       />
 
-      {estadosInputs[0].value != "" && (
+      {props.estadosInputs[0].value != "" && (
         <div className="estado-inicial-e-finais-row">
           <EstadoSelectable
-            handleEstadoInicialChange={handleEstadoInicialChange}
-            estadoInicialSelecionado={estadoInicial}
-            estados={estadosInputs}
+            handleEstadoInicialChange={props.handleEstadoInicialChange}
+            estadoInicialSelecionado={props.estadoInicial}
+            estados={props.estadosInputs}
           />
 
           <EstadosSelectable
-            estados={estadosInputs}
-            handleEstadoDestinoChange={handleEstadoDestinoChange}
-            listaComEstadosSelecionados={estadosDestinoSelecionados}
+            estados={props.estadosInputs}
+            handleEstadoDestinoChange={props.handleEstadoDestinoChange}
+            listaComEstadosSelecionados={props.estadosDestinoSelecionados}
           />
         </div>
       )}

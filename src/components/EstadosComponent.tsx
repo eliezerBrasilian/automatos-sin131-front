@@ -1,4 +1,4 @@
-import { InputItem } from "../App";
+import { InputItem } from "../types/InputItem";
 import { ButtonAdd } from "./BtnAdd";
 
 interface EstadosComponentProps {
@@ -18,6 +18,7 @@ export function EstadosComponent({
       <div style={{ display: "flex", columnGap: 10 }}>
         {inputs.map((v) => (
           <input
+            key={v.id}
             style={{
               width: 40,
               height: 40,

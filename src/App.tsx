@@ -14,14 +14,11 @@ function App() {
   const [indexSelected, setIndexSelected] = useState(-1);
 
   const [inputs, setEstadoInputs] = useState<InputItem[]>([
-    { id: 0, value: "q0" },
-    { id: 1, value: "q1" },
-    { id: 2, value: "q2" },
+    { id: 0, value: "" },
   ]);
 
   const [alfabetoInputs, setAlfabetoInputs] = useState<InputItem[]>([
-    { id: 0, value: "a" },
-    { id: 0, value: "b" },
+    { id: 0, value: "" },
   ]);
 
   const [afd, setAfd] = useState<Afn>();
@@ -30,49 +27,13 @@ function App() {
   const [transicaoInputs, setTransicaoInputs] = useState<TransicaoItem[]>([
     {
       id: 0,
-      estadoAtualValue: "q0",
-      simboloEntradaValue: "a",
-      estadoDestinoValue: "q1",
-    },
-    {
-      id: 1,
-      estadoAtualValue: "q0",
-      simboloEntradaValue: "b",
-      estadoDestinoValue: "q0",
-    },
-    {
-      id: 3,
-      estadoAtualValue: "q1",
-      simboloEntradaValue: "a",
-      estadoDestinoValue: "q2",
-    },
-    {
-      id: 4,
-      estadoAtualValue: "q1",
-      simboloEntradaValue: "a",
-      estadoDestinoValue: "q0",
-    },
-    {
-      id: 5,
-      estadoAtualValue: "q2",
-      simboloEntradaValue: "a",
-      estadoDestinoValue: "q2",
-    },
-    {
-      id: 6,
-      estadoAtualValue: "q2",
-      simboloEntradaValue: "a",
-      estadoDestinoValue: "q0",
-    },
-    {
-      id: 7,
-      estadoAtualValue: "q2",
-      simboloEntradaValue: "b",
-      estadoDestinoValue: "q2",
+      estadoAtualValue: "",
+      simboloEntradaValue: "",
+      estadoDestinoValue: "",
     },
   ]);
 
-  const [estadoInicial, setEstadoInicial] = useState("q0");
+  const [estadoInicial, setEstadoInicial] = useState("");
 
   const [estadosDestinoSelecionados, setEstadosDestinoSelecionados] = useState<
     EstadoItem[]
@@ -80,10 +41,81 @@ function App() {
 
   const [palavra, setPalavra] = useState("");
 
+  const clickFillAutomato = () => {
+    setEstadoInputs([
+      { id: 0, value: "q1" },
+      { id: 1, value: "q2" },
+      { id: 2, value: "q3" },
+      { id: 3, value: "q4" },
+    ]);
+
+    setAlfabetoInputs([
+      { id: 0, value: "a" },
+      { id: 1, value: "b" },
+    ]);
+
+    setTransicaoInputs([
+      {
+        id: 0,
+        estadoAtualValue: "q1",
+        simboloEntradaValue: "a",
+        estadoDestinoValue: "q2",
+      },
+      {
+        id: 1,
+        estadoAtualValue: "q1",
+        simboloEntradaValue: "a",
+        estadoDestinoValue: "q3",
+      },
+      {
+        id: 2,
+        estadoAtualValue: "q2",
+        simboloEntradaValue: "b",
+        estadoDestinoValue: "q2",
+      },
+      {
+        id: 3,
+        estadoAtualValue: "q2",
+        simboloEntradaValue: "a",
+        estadoDestinoValue: "q4",
+      },
+      {
+        id: 4,
+        estadoAtualValue: "q4",
+        simboloEntradaValue: "a",
+        estadoDestinoValue: "q3",
+      },
+      {
+        id: 5,
+        estadoAtualValue: "q4",
+        simboloEntradaValue: "b",
+        estadoDestinoValue: "q2",
+      },
+      {
+        id: 6,
+        estadoAtualValue: "q3",
+        simboloEntradaValue: "a",
+        estadoDestinoValue: "q3",
+      },
+      {
+        id: 7,
+        estadoAtualValue: "q3",
+        simboloEntradaValue: "b",
+        estadoDestinoValue: "q2",
+      },
+    ]);
+
+    setEstadoInicial("q1");
+  };
+
   const [canShowRestButtonItens, setCanShowRestButtonItens] = useState(false);
 
-  const [afnAccepted, setAfnAccepted] = useState(false);
-  const [afdAccepted, setAfdAccepted] = useState(false);
+  const [afnAccepted, setAfnAccepted] = useState<undefined | boolean>(
+    undefined
+  );
+  const [afdAccepted, setAfdAccepted] = useState<undefined | boolean>(
+    undefined
+  );
 
   const automatosService = new AutomatoService();
 
@@ -173,7 +205,7 @@ function App() {
     if (lastInput.value.trim() !== "") {
       setEstadoInputs((prevInputs) => [
         ...prevInputs,
-        { id: prevInputs.length + 1, value: "" },
+        { id: prevInputs.length, value: "" },
       ]);
     }
   };
@@ -189,7 +221,7 @@ function App() {
     if (lastInput.value.trim() !== "") {
       setAlfabetoInputs((prevInputs) => [
         ...prevInputs,
-        { id: prevInputs.length + 1, value: "" },
+        { id: prevInputs.length, value: "" },
       ]);
     }
   };
@@ -239,7 +271,7 @@ function App() {
       setTransicaoInputs((prevInputs) => [
         ...prevInputs,
         {
-          id: prevInputs.length + 1,
+          id: prevInputs.length,
           estadoAtualValue: "",
           simboloEntradaValue: "",
           estadoDestinoValue: "",
@@ -295,7 +327,11 @@ function App() {
       setCanShowRestButtonItens(true);
       setAfnContentInputVisible(false);
 
+      console.log("--------afd resultante----------");
+      console.log(afd_);
+
       setAfd(afd_);
+      setIndexSelected(0);
     } else {
       alert("Preencha todos os campos corretamente");
     }
@@ -339,6 +375,7 @@ function App() {
       handleMenuSimulate={handleMenuSimulate}
       createNewAfn={createNewAfn}
       handleClickConvertAfnToAfd={handleClickConvertAfnToAfd}
+      clickFillAutomato={clickFillAutomato}
     />
   );
 }
