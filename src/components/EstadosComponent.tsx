@@ -14,7 +14,7 @@ export function EstadosComponent({
 }: EstadosComponentProps) {
   return (
     <div style={{ marginTop: 30 }}>
-      <p style={{ textAlign: "left" }}>Informe os estados</p>
+      <h4 style={{ textAlign: "left" }}>Informe os estados</h4>
       <div style={{ display: "flex", columnGap: 10 }}>
         {inputs.map((v) => (
           <input

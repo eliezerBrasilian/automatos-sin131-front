@@ -37,7 +37,7 @@ export function TransicaoComponent({
 }: TransicaoComponentProps) {
   return (
     <div style={{ marginTop: 30 }}>
-      <p style={{ textAlign: "left" }}>Informe a transição</p>
+      <h4 style={{ textAlign: "left" }}>Informe a transição</h4>
       <div style={{ display: "flex", columnGap: 10 }}>
         <div style={{ display: "flex", flexDirection: "column", rowGap: 5 }}>
           {inputs.map((v, i) => (

@@ -6,18 +6,20 @@ import { Item } from "./Item";
 export function MainContent(props: MainContentProps) {
   return (
     <div className="container_geral">
-      <h2>Bem vindo ao mundo dos autômatos</h2>
+      <h2 className="titulo">Bem vindo ao mundo dos autômatos</h2>
       <div className="main_content">
-        <div className="btns-div">
+        <div className="main_btns">
+          <Item text={"Entrar com AFD"} isSelected={false} onClick={() => {}} />
+          <Item text={"Entrar com AFN"} isSelected={false} onClick={() => {}} />
+        </div>
+
+        {/* <div className="btns-div">
           <Item
-            text={
-              props.afnContentInputIsVisible
-                ? "Converter AFN para AFD"
-                : "AFD resultante"
-            }
+            text={"Converter AFN para AFD"}
             onClick={props.convertAfnToAfd}
             isSelected={props.indexSelected == 0}
           />
+
           {props.canShowRestButtonItens && (
             <Item
               text="Minimizar AFD"
@@ -36,12 +38,12 @@ export function MainContent(props: MainContentProps) {
 
           {props.canShowRestButtonItens && (
             <Item
-              text="Testar equivalência entre AFD e AFN"
+              text="Testar equivalência"
               onClick={props.testEquivalency}
               isSelected={props.indexSelected == 3}
             />
           )}
-        </div>
+        </div> */}
 
         <div className="resultado_container">
           {props.afnContentInputIsVisible && !props.canShowRestButtonItens && (

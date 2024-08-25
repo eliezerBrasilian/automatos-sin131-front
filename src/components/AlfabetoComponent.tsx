@@ -14,8 +14,8 @@ export function AlfabetoComponent({
   handleAddInput,
 }: AlfabetoComponentProps) {
   return (
-    <div style={{ marginTop: 30 }}>
-      <p style={{ textAlign: "left" }}>Informe o alfabeto</p>
+    <div style={{ marginTop: 30, marginLeft: 60 }}>
+      <h4 style={{ textAlign: "left" }}>Informe o alfabeto</h4>
       <div style={{ display: "flex", columnGap: 10 }}>
         {inputs.map((v, i) => (
           <input
