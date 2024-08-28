@@ -1,4 +1,4 @@
-import { InputItem } from "../App";
+import { InputItem } from "../types/InputItem";
 
 interface EstadoSelectableProps {
   estados: InputItem[];
@@ -13,7 +13,7 @@ export function EstadoSelectable({
 }: EstadoSelectableProps) {
   return (
     <div style={{ marginTop: 30 }}>
-      <p style={{ textAlign: "left" }}>Selecione o estado inicial</p>
+      <h4 style={{ textAlign: "left" }}>Selecione o estado inicial</h4>
       <div style={{ display: "flex", columnGap: 10 }}>
         {estados.map((v, i) =>
           v.value == "" ? null : (
@@ -25,8 +25,12 @@ export function EstadoSelectable({
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor:
+                borderStyle:
+                  estadoInicialSelecionado == v.value ? "solid" : "none",
+                borderColor:
                   estadoInicialSelecionado == v.value ? "#EC5766" : "",
+                backgroundColor:
+                  estadoInicialSelecionado == v.value ? "#fff" : "",
               }}
               value={v.value}
               onClick={() => handleEstadoInicialChange(v.value)}

@@ -13,7 +13,9 @@ export function ButtonAdd({ onClick }: ButtonAddProps) {
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 35 / 2,
-        backgroundColor: "#DA344D",
+        backgroundColor: "#0f6485",
+        color: "#fff",
+        borderStyle: "none",
       }}
     >
       +
