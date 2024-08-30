@@ -37,11 +37,13 @@ export class AutomatoService {
       throw new Error("ocoreu erro ao aceitar: " + error);
     }
   }
-  async simulateAcceptingAfd(afd: Afn, palavra: string) {
+  async simulateAcceptingAfd(afd: Afn | null, palavra: string) {
     const body = {
       afd: afd,
       palavra: palavra,
     };
+
+    if (afd == null) throw new Error("afd cannot be null");
 
     try {
       const resp = await api.post("afd/aceita-palavra", body);

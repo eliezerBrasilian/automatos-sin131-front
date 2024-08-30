@@ -1,7 +1,8 @@
 import { useState } from "react";
 import "../App.css";
-import { useAfnContext, WordStatus } from "../context/AfnContext";
+import { useAfnContext } from "../context/AfnContext";
 import { useNavigate } from "react-router-dom";
+import { WordStatus } from "../data/enums/WordStatus";
 
 export function SimulateWordPage() {
   const afnContext = useAfnContext();
@@ -49,7 +50,7 @@ export function SimulateWordPage() {
           <button onClick={handleSimulateClick}>Simular</button>
           <button
             onClick={() => {
-              afnContext.resetStatusOfWordAccepted();
+              afnContext.reset();
               nav(-1);
             }}
           >

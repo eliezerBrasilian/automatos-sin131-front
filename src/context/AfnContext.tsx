@@ -5,47 +5,13 @@ import { TransicaoItem } from "../types/TransicaoItem";
 import { getAfn } from "../data/data";
 import { AutomatoService } from "../services/AutomatoService";
 import { EstadoItem } from "../types/EstadoItem";
+import { WordStatus } from "../data/enums/WordStatus";
+import { AfnContextInterface } from "./AfnContextInterface";
+import { EquivalencyState } from "./EquivalencyState";
 
 type AppProviderProps = {
   children: ReactNode;
 };
-
-interface AfnContextInterface {
-  afdConvertedFromAfn: Afn | null;
-  alfabetoInputs: InputItem[];
-  inputs: InputItem[];
-  estadoInicial: string;
-  transicaoInputs: TransicaoItem[];
-  estadosDestinoSelecionados: EstadoItem[];
-  automatoAccepted: WordStatus;
-  handleAlfabetoInputChange: (id: number, value: string) => void;
-  handleInputChange: (id: number, value: string) => void;
-  handleEstadoInicialChange: (value: string) => void;
-  handleEstadoAtualInputChange: (id: number, estadoAtualValue: string) => void;
-  handleSimboloInputChange: (id: number, simboloEntradaValue: string) => void;
-  handleEstadoDestinoInputChange: (
-    id: number,
-    estadoDestinoValue: string
-  ) => void;
-  handleEstadoDestinoChange: (id: number, value: string) => void;
-  handleAddAlfabetoInput: () => void;
-  handleAddInput: () => void;
-  handleAddTransicaoInput: () => void;
-  fillAlfabetoInputs: () => void;
-  fillInputs: () => void;
-  fillTransicoes: () => void;
-  updateAfd(afn: Afn): void;
-  clickFillAutomato: () => void;
-  handleClickConvertAfnToAfd: () => Promise<void>;
-  simulateAccepting: (palavra: string) => Promise<void>;
-  resetStatusOfWordAccepted: () => void;
-}
-
-export enum WordStatus {
-  ACCEPTED,
-  REJECTED,
-  IDLE,
-}
 
 export const AfnContext = createContext<AfnContextInterface | undefined>(
   undefined
@@ -87,6 +53,12 @@ export function AfnContextProvider({ children }: AppProviderProps) {
   const [automatoAccepted, setAutomatoAccept] = useState<WordStatus>(
     WordStatus.IDLE
   );
+  const [equivalencyState, setEquivalencyState] = useState<EquivalencyState>({
+    afdConvertedFromAfn: WordStatus.IDLE,
+    originalAfn: WordStatus.IDLE,
+  });
+
+  const [minimizedAfd, setMinimizedAfd] = useState<Afn | null>(null);
 
   const automatosService = new AutomatoService();
 
@@ -301,15 +273,52 @@ export function AfnContextProvider({ children }: AppProviderProps) {
         afdConvertedFromAfn,
         palavra
       );
-
       if (afdIsAccepted_) setAutomatoAccept(WordStatus.ACCEPTED);
       else setAutomatoAccept(WordStatus.REJECTED);
     }
   };
 
-  const resetStatusOfWordAccepted = () => {
+  const reset = () => {
     setAutomatoAccept(WordStatus.IDLE);
+    setEquivalencyState({
+      afdConvertedFromAfn: WordStatus.IDLE,
+      originalAfn: WordStatus.IDLE,
+    });
   };
+
+  const minimizeAfd = async () => {
+    if (afdConvertedFromAfn != null) {
+      const afdMinimized_ = await automatosService.minimizeAfd(
+        afdConvertedFromAfn
+      );
+      console.log("minimizado");
+      console.log(afdMinimized_);
+      setMinimizedAfd(afdMinimized_);
+    }
+  };
+
+  async function testEquivalency(word: string) {
+    const afn = getAfn(
+      alfabetoInputs,
+      inputs,
+      transicaoInputs,
+      estadoInicial,
+      estadosDestinoSelecionados
+    );
+
+    const afnAccepted = await automatosService.simulateAcceptingAfn(afn, word);
+    const afdAccepted = await automatosService.simulateAcceptingAfd(
+      afdConvertedFromAfn,
+      word
+    );
+
+    setEquivalencyState({
+      originalAfn: afnAccepted ? WordStatus.ACCEPTED : WordStatus.REJECTED,
+      afdConvertedFromAfn: afdAccepted
+        ? WordStatus.ACCEPTED
+        : WordStatus.REJECTED,
+    });
+  }
 
   return (
     <AfnContext.Provider
@@ -317,6 +326,7 @@ export function AfnContextProvider({ children }: AppProviderProps) {
         afdConvertedFromAfn,
         updateAfd,
         alfabetoInputs,
+        minimizedAfd,
         handleAddAlfabetoInput,
         handleAlfabetoInputChange,
         fillAlfabetoInputs,
@@ -338,7 +348,10 @@ export function AfnContextProvider({ children }: AppProviderProps) {
         handleEstadoDestinoChange,
         simulateAccepting,
         automatoAccepted,
-        resetStatusOfWordAccepted,
+        reset,
+        minimizeAfd,
+        testEquivalency,
+        equivalencyState,
       }}
     >
       {children}

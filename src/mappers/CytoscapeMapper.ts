@@ -1,6 +1,10 @@
 import { Afn } from "../types/Afn";
 
-export function mapAfnToCytoscapeElements(afn: Afn) {
+export function mapAfnToCytoscapeElements(afn: Afn | null) {
+  if (afn == null) {
+    throw new Error("afn cannot be null");
+  }
+
   // Mapeando os estados para nós (nodes)
   const nodes = afn.conjuntoEstados.map((estado, index) => ({
     data: {

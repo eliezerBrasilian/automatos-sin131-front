@@ -6,6 +6,7 @@ import { CreateAfnPage } from "../pages/CreateAfnPage";
 import { HomePage } from "../pages/HomePage";
 import { TestEquivalency } from "../pages/TestEquivalency";
 import { SimulateWordPage } from "../pages/SimulateWordPage";
+import { MinimizedAfdPage } from "../pages/MinimizedAfdPage";
 
 export function RoutesApp() {
   return (
@@ -18,6 +19,7 @@ export function RoutesApp() {
         <Route path={Rotas.CREATE_AFN} element={<CreateAfnPage />} />
         <Route path={Rotas.SIMULATE_WORD} element={<SimulateWordPage />} />
         <Route path={Rotas.TEST_EQUIVALENCY} element={<TestEquivalency />} />
+        <Route path={Rotas.MINIMIZE_AFD} element={<MinimizedAfdPage />} />
       </Routes>
     </BrowserRouter>
   );

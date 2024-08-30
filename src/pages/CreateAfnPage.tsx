@@ -14,15 +14,6 @@ export function CreateAfnPage() {
 
   const nav = useNavigate();
 
-  // const minimizeAfd = async () => {
-  //   if (afd != undefined) {
-  //     const afdMinimized_ = await automatosService.minimizeAfd(afd);
-  //     console.log("minimizado");
-  //     console.log(afdMinimized_);
-  //     setAfdMinimized(afdMinimized_);
-  //   }
-  // };
-
   return (
     <div className="afd-page">
       <h1>
@@ -84,7 +75,14 @@ export function CreateAfnPage() {
             />
           </div>
           <div className="btns-container">
-            <button>Minimizar AFD</button>
+            <button
+              onClick={() => {
+                afnContext.minimizeAfd();
+                nav(Rotas.MINIMIZE_AFD);
+              }}
+            >
+              Minimizar AFD
+            </button>
             <button onClick={() => nav(Rotas.SIMULATE_WORD)}>
               Simular aceitação de palavras
             </button>
