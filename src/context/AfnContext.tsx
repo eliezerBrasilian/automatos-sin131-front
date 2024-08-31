@@ -6,24 +6,12 @@ import { getAfn } from "../data/data";
 import { AutomatoService } from "../services/AutomatoService";
 import { EstadoItem } from "../types/EstadoItem";
 import { WordStatus } from "../data/enums/WordStatus";
-import { AfnContextInterface } from "./AfnContextInterface";
 import { EquivalencyState } from "./EquivalencyState";
+import { AfnContextInterface } from "./AfnContextInterface";
 
 type AppProviderProps = {
   children: ReactNode;
 };
-
-export const AfnContext = createContext<AfnContextInterface | undefined>(
-  undefined
-);
-
-export function useAfnContext() {
-  const context = useContext(AfnContext);
-  if (!context) {
-    throw new Error("useAppContext must be used within an AppContextProvider");
-  }
-  return context;
-}
 
 export function AfnContextProvider({ children }: AppProviderProps) {
   const [afdConvertedFromAfn, setAfdConvertedFromAfn] = useState<Afn | null>(
@@ -58,7 +46,7 @@ export function AfnContextProvider({ children }: AppProviderProps) {
     originalAfn: WordStatus.IDLE,
   });
 
-  const [minimizedAfd, setMinimizedAfd] = useState<Afn | null>(null);
+  const [minimizedAfd, setMinimizedAfd] = useState<Afn>();
 
   const automatosService = new AutomatoService();
 
@@ -78,17 +66,6 @@ export function AfnContextProvider({ children }: AppProviderProps) {
     }
   };
 
-  const fillAlfabetoInputs = () => {
-    setAlfabetoInputs([
-      { id: 0, value: "a" },
-      { id: 1, value: "b" },
-    ]);
-  };
-
-  function updateAfd(afn: Afn) {
-    setAfdConvertedFromAfn(afn);
-  }
-
   const handleInputChange = (id: number, value: string) => {
     setInputs((prevInputs) =>
       prevInputs.map((input) => (input.id === id ? { ...input, value } : input))
@@ -103,15 +80,6 @@ export function AfnContextProvider({ children }: AppProviderProps) {
         { id: prevInputs.length, value: "" },
       ]);
     }
-  };
-
-  const fillInputs = () => {
-    setInputs([
-      { id: 0, value: "q1" },
-      { id: 1, value: "q2" },
-      { id: 2, value: "q3" },
-      { id: 3, value: "q4" },
-    ]);
   };
 
   const handleEstadoInicialChange = (value: string) => {
@@ -172,6 +140,29 @@ export function AfnContextProvider({ children }: AppProviderProps) {
     });
   };
 
+  const clickFillAutomato = () => {
+    fillInputs();
+    fillAlfabetoInputs();
+    fillTransicoes();
+    setEstadoInicial("q1");
+  };
+
+  const fillInputs = () => {
+    setInputs([
+      { id: 0, value: "q1" },
+      { id: 1, value: "q2" },
+      { id: 2, value: "q3" },
+      { id: 3, value: "q4" },
+    ]);
+  };
+
+  const fillAlfabetoInputs = () => {
+    setAlfabetoInputs([
+      { id: 0, value: "a" },
+      { id: 1, value: "b" },
+    ]);
+  };
+
   const fillTransicoes = () => {
     setTransicaoInputs([
       {
@@ -225,13 +216,6 @@ export function AfnContextProvider({ children }: AppProviderProps) {
     ]);
   };
 
-  const clickFillAutomato = () => {
-    fillInputs();
-    fillAlfabetoInputs();
-    fillTransicoes();
-    setEstadoInicial("q1");
-  };
-
   const handleClickConvertAfnToAfd = async () => {
     const afn = getAfn(
       alfabetoInputs,
@@ -243,9 +227,10 @@ export function AfnContextProvider({ children }: AppProviderProps) {
 
     try {
       const afdResultante = await automatosService.convertAfnToAfd(afn);
-      //setAfdConvertedFromAfn(afdResultante);
-      updateAfd(afdResultante);
-      console.log(afdResultante.estadosFinais);
+
+      setAfdConvertedFromAfn(afdResultante);
+      console.log("----------convertido");
+      console.log(afdResultante);
     } catch (error) {
       alert("Erro ao realizar conversão");
     }
@@ -287,7 +272,7 @@ export function AfnContextProvider({ children }: AppProviderProps) {
   };
 
   const minimizeAfd = async () => {
-    if (afdConvertedFromAfn != null) {
+    if (afdConvertedFromAfn != undefined) {
       const afdMinimized_ = await automatosService.minimizeAfd(
         afdConvertedFromAfn
       );
@@ -324,7 +309,7 @@ export function AfnContextProvider({ children }: AppProviderProps) {
     <AfnContext.Provider
       value={{
         afdConvertedFromAfn,
-        updateAfd,
+        // updateAfd,
         alfabetoInputs,
         minimizedAfd,
         handleAddAlfabetoInput,
@@ -357,4 +342,16 @@ export function AfnContextProvider({ children }: AppProviderProps) {
       {children}
     </AfnContext.Provider>
   );
+}
+
+export const AfnContext = createContext<AfnContextInterface | undefined>(
+  undefined
+);
+
+export function useAfnContext() {
+  const context = useContext(AfnContext);
+  if (!context) {
+    throw new Error("useAppContext must be used within an AppContextProvider");
+  }
+  return context;
 }

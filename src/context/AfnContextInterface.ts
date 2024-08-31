@@ -13,7 +13,7 @@ export interface AfnContextInterface {
   transicaoInputs: TransicaoItem[];
   estadosDestinoSelecionados: EstadoItem[];
   automatoAccepted: WordStatus;
-  minimizedAfd: Afn | null;
+  minimizedAfd?: Afn;
   equivalencyState: EquivalencyState;
   handleAlfabetoInputChange: (id: number, value: string) => void;
   handleInputChange: (id: number, value: string) => void;
@@ -31,7 +31,6 @@ export interface AfnContextInterface {
   fillAlfabetoInputs: () => void;
   fillInputs: () => void;
   fillTransicoes: () => void;
-  updateAfd(afn: Afn): void;
   clickFillAutomato: () => void;
   handleClickConvertAfnToAfd: () => Promise<void>;
   simulateAccepting: (palavra: string) => Promise<void>;

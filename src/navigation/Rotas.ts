@@ -5,6 +5,7 @@ enum Rotas {
   SIMULATE_WORD = "/simular-palavra",
   TEST_EQUIVALENCY = "/testar-equivalencia",
   MINIMIZE_AFD = "/minimize-afd",
+  TURING_MACHINE = "/maquina-de-turing",
 }
 
 export { Rotas };

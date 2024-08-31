@@ -20,6 +20,9 @@ function Menu() {
       <div className="btns-container">
         <button onClick={() => nav(Rotas.CREATE_AFN)}>Entrar com a AFN</button>
         <button onClick={() => nav(Rotas.CREATE_AFD)}>Entrar com a AFD</button>
+        <button onClick={() => nav(Rotas.TURING_MACHINE)}>
+          Máquina de Turing
+        </button>
       </div>
     </div>
   );

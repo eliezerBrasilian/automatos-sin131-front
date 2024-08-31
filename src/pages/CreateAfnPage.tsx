@@ -19,7 +19,7 @@ export function CreateAfnPage() {
       <h1>
         {afnContext.afdConvertedFromAfn != null
           ? "AFN convertido com sucesso para AFD 😊"
-          : "Aréa de criação do Autômato Finito Não Deterministico (AFN)"}
+          : "Área de criação do Autômato Finito Não Deterministico (AFN)"}
       </h1>
 
       {afnContext.afdConvertedFromAfn != null ? (
@@ -78,7 +78,9 @@ export function CreateAfnPage() {
             <button
               onClick={() => {
                 afnContext.minimizeAfd();
-                nav(Rotas.MINIMIZE_AFD);
+
+                if (afnContext.minimizeAfd != undefined)
+                  nav(Rotas.MINIMIZE_AFD);
               }}
             >
               Minimizar AFD

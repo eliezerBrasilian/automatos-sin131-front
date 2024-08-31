@@ -7,6 +7,7 @@ import { HomePage } from "../pages/HomePage";
 import { TestEquivalency } from "../pages/TestEquivalency";
 import { SimulateWordPage } from "../pages/SimulateWordPage";
 import { MinimizedAfdPage } from "../pages/MinimizedAfdPage";
+import { TuringMachine } from "../pages/TuringMachine";
 
 export function RoutesApp() {
   return (
@@ -20,6 +21,7 @@ export function RoutesApp() {
         <Route path={Rotas.SIMULATE_WORD} element={<SimulateWordPage />} />
         <Route path={Rotas.TEST_EQUIVALENCY} element={<TestEquivalency />} />
         <Route path={Rotas.MINIMIZE_AFD} element={<MinimizedAfdPage />} />
+        <Route path={Rotas.TURING_MACHINE} element={<TuringMachine />} />
       </Routes>
     </BrowserRouter>
   );

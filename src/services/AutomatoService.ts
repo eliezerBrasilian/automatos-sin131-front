@@ -4,7 +4,7 @@ import { Afn } from "./../types/Afn";
 export class AutomatoService {
   async convertAfnToAfd(afn: Afn) {
     try {
-      const resp = await api.post("afn", afn);
+      const resp = await api.post("convert-afn", afn);
 
       return resp.data as Afn;
     } catch (error) {
@@ -14,7 +14,7 @@ export class AutomatoService {
 
   async minimizeAfd(afd: Afn) {
     try {
-      const resp = await api.post("afd/minimizar", afd);
+      const resp = await api.post(`minimize`, afd);
 
       return resp.data as Afn;
     } catch (error) {
@@ -37,6 +37,7 @@ export class AutomatoService {
       throw new Error("ocoreu erro ao aceitar: " + error);
     }
   }
+
   async simulateAcceptingAfd(afd: Afn | null, palavra: string) {
     const body = {
       afd: afd,

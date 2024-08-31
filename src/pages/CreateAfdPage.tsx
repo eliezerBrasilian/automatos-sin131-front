@@ -206,7 +206,7 @@ export function CreateAfdPage() {
 
   return (
     <div className="afd-page">
-      <h1>Aréa de criação do Autômato Finito Deterministico (AFD)</h1>
+      <h1>Área de criação do Autômato Finito Deterministico (AFD)</h1>
 
       <div className="menu-container" style={{ height: "fit-content" }}>
         <div className="estado-alfabeto-row">
