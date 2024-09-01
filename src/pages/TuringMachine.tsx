@@ -17,11 +17,13 @@ export function TuringMachine() {
   const [numeroStatus, setNumeroStatus] = useState<NumeroStatus>(
     NumeroStatus.IDLE
   );
+  const [resultValorIncrementado, setresulValorIncrementado] = useState("");
 
   const nav = useNavigate();
   const turingService = new TuringMachineService();
 
   async function handleClickNumeroPar() {
+    setresulValorIncrementado("");
     if (binaryNumber.trim() == "") {
       alert("Por favor digite um numero é binário");
     } else {
@@ -30,13 +32,15 @@ export function TuringMachine() {
       setNumeroStatus(resp ? NumeroStatus.PAR : NumeroStatus.IMPAR);
     }
   }
-  async function handleClickPalindromo() {
+
+  async function handleClickvalorIncrementado() {
+    setNumeroStatus(NumeroStatus.IDLE);
     if (binaryNumber.trim() == "") {
       alert("Por favor digite um numero é binário");
     } else {
-      const resp = await turingService.palindromo(binaryNumber);
+      const resp = await turingService.valorIncrementado(binaryNumber);
 
-      setNumeroStatus(resp ? NumeroStatus.PAR : NumeroStatus.IMPAR);
+      setresulValorIncrementado(resp);
     }
   }
 
@@ -60,15 +64,28 @@ export function TuringMachine() {
               }}
             >
               {numeroStatus == NumeroStatus.PAR
-                ? "SIM: Foi aceito pela máquina"
-                : "NÃO: Foi rejeitado pela máquina"}
+                ? "SIM: Foi aceito pela máquina é par"
+                : "NÃO: Foi rejeitado pela máquina é ímpar"}
             </p>
           )}
         </div>
 
+        {resultValorIncrementado != "" && (
+          <p
+            style={{
+              marginTop: -50,
+              color: "#488000",
+            }}
+          >
+            Valor incrementado: {resultValorIncrementado}
+          </p>
+        )}
+
         <div className="btns-container">
           <button onClick={handleClickNumeroPar}>Número par em binário</button>
-          <button onClick={handleClickPalindromo}>Palíndromos</button>
+          <button onClick={handleClickvalorIncrementado}>
+            Incremento de Binário
+          </button>
           <button
             onClick={() => {
               afnContext.reset();

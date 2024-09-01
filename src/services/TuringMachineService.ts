@@ -10,11 +10,11 @@ export class TuringMachineService {
       throw new Error("ocoreu erro ao converter: " + error);
     }
   }
-  async palindromo(number: string) {
+  async valorIncrementado(number: string) {
     try {
-      const resp = await turingApi.post("palindromo/" + number);
+      const resp = await turingApi.post("valorIncrementado/" + number);
 
-      return resp.data as boolean;
+      return resp.data as string;
     } catch (error) {
       throw new Error("ocoreu erro ao converter: " + error);
     }

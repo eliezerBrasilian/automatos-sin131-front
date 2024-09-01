@@ -282,6 +282,17 @@ export function AfnContextProvider({ children }: AppProviderProps) {
     }
   };
 
+  const minimizeAfdSemTerConvertidoAntes = async () => {
+    if (afdConvertedFromAfn != undefined) {
+      const afdMinimized_ = await automatosService.minimizeAfd(
+        afdConvertedFromAfn
+      );
+      console.log("minimizado");
+      console.log(afdMinimized_);
+      setMinimizedAfd(afdMinimized_);
+    }
+  };
+
   async function testEquivalency(word: string) {
     const afn = getAfn(
       alfabetoInputs,
@@ -337,6 +348,7 @@ export function AfnContextProvider({ children }: AppProviderProps) {
         minimizeAfd,
         testEquivalency,
         equivalencyState,
+        minimizeAfdSemTerConvertidoAntes,
       }}
     >
       {children}

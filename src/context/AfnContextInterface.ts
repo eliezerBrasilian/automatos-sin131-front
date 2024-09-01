@@ -37,4 +37,5 @@ export interface AfnContextInterface {
   reset: () => void;
   minimizeAfd: () => Promise<void>;
   testEquivalency: (word: string) => Promise<void>;
+  minimizeAfdSemTerConvertidoAntes: () => Promise<void>;
 }

@@ -7,8 +7,13 @@ import { EstadosSelectable } from "../components/EstadosSelectable";
 import { EstadosComponent } from "../components/EstadosComponent";
 import { AlfabetoComponent } from "../components/AlfabetoComponent";
 import { EstadoItem } from "../types/EstadoItem";
+import { useAfnContext } from "../context/AfnContext";
+import { useNavigate } from "react-router-dom";
+import { Rotas } from "../navigation/Rotas";
 
 export function CreateAfdPage() {
+  const afnContext = useAfnContext();
+  const nav = useNavigate();
   const [estadoInicial, setEstadoInicial] = useState("");
   const [inputs, setEstadoInputs] = useState<InputItem[]>([
     { id: 0, value: "" },
@@ -249,7 +254,15 @@ export function CreateAfdPage() {
         </div>
 
         <div className="btns-container">
-          <button>Minimizar AFD</button>
+          <button
+            onClick={() => {
+              afnContext.minimizeAfdSemTerConvertidoAntes();
+
+              if (afnContext.minimizeAfd != undefined) nav(Rotas.MINIMIZE_AFD);
+            }}
+          >
+            Minimizar AFD
+          </button>
           <button onClick={clickFillAutomato}>Preencher Automaticamente</button>
         </div>
       </div>
