@@ -3,6 +3,7 @@ import { useAfnContext } from "../context/AfnContext";
 import { useNavigate } from "react-router-dom";
 import CytoscapeComponent from "react-cytoscapejs";
 import { mapMinimedAfnToCytoscapeElements } from "../mappers/CytoscapeMapper";
+import { Rotas } from "../navigation/Rotas";
 export function MinimizedAfdPage() {
   const afnContext = useAfnContext();
 

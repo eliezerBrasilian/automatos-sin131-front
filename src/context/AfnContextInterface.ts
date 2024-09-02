@@ -38,4 +38,6 @@ export interface AfnContextInterface {
   minimizeAfd: () => Promise<void>;
   testEquivalency: (word: string) => Promise<void>;
   minimizeAfdSemTerConvertidoAntes: () => Promise<void>;
+  clickFillAutomatoAfd: () => void;
+  clearAll: () => void;
 }

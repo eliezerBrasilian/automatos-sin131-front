@@ -52,7 +52,9 @@ export function mapMinimedAfnToCytoscapeElements(afn: Afn) {
         label: estado.nome,
         isFinalState: afn.estadosFinais.some(
           (finalState) => finalState.nome === estado.nome
-        ), // Verifica se o estado é final
+        )
+          ? "true"
+          : "false", // Verifica se o estado é final
       },
       position: { x: 100 + index * 150, y: 100 + index * 50 },
     })

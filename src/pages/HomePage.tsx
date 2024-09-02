@@ -1,8 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import "../App.css";
 import { Rotas } from "../navigation/Rotas";
+import { useEffect } from "react";
+import { useAfnContext } from "../context/AfnContext";
 
 export function HomePage() {
+  const afnContext = useAfnContext();
+  useEffect(() => {
+    afnContext.clearAll();
+  }, []);
   return (
     <div className="home-container ">
       <h1>SEJA-BEM VINDO AO MUNDO DOS AUTOMATOS</h1>

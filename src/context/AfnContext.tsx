@@ -147,6 +147,86 @@ export function AfnContextProvider({ children }: AppProviderProps) {
     setEstadoInicial("q1");
   };
 
+  const clickFillAutomatoAfd = () => {
+    setInputs([
+      { id: 0, value: "s0" },
+      { id: 1, value: "s1" },
+      { id: 2, value: "s2" },
+      { id: 3, value: "s3" },
+      { id: 4, value: "s4" },
+    ]);
+
+    setAlfabetoInputs([
+      { id: 0, value: "a" },
+      { id: 1, value: "b" },
+    ]);
+
+    setTransicaoInputs([
+      {
+        id: 0,
+        estadoAtualValue: "s0",
+        simboloEntradaValue: "a",
+        estadoDestinoValue: "s1",
+      },
+      {
+        id: 1,
+        estadoAtualValue: "s0",
+        simboloEntradaValue: "b",
+        estadoDestinoValue: "s2",
+      },
+      {
+        id: 2,
+        estadoAtualValue: "s1",
+        simboloEntradaValue: "a",
+        estadoDestinoValue: "s1",
+      },
+      {
+        id: 3,
+        estadoAtualValue: "s1",
+        simboloEntradaValue: "b",
+        estadoDestinoValue: "s3",
+      },
+      {
+        id: 4,
+        estadoAtualValue: "s2",
+        simboloEntradaValue: "a",
+        estadoDestinoValue: "s1",
+      },
+      {
+        id: 5,
+        estadoAtualValue: "s2",
+        simboloEntradaValue: "b",
+        estadoDestinoValue: "s2",
+      },
+      {
+        id: 6,
+        estadoAtualValue: "s3",
+        simboloEntradaValue: "a",
+        estadoDestinoValue: "s1",
+      },
+      {
+        id: 7,
+        estadoAtualValue: "s3",
+        simboloEntradaValue: "b",
+        estadoDestinoValue: "s4",
+      },
+      {
+        id: 8,
+        estadoAtualValue: "s4",
+        simboloEntradaValue: "a",
+        estadoDestinoValue: "s1",
+      },
+      {
+        id: 9,
+        estadoAtualValue: "s4",
+        simboloEntradaValue: "b",
+        estadoDestinoValue: "s2",
+      },
+    ]);
+
+    setEstadoInicial("s0");
+  };
+
   const fillInputs = () => {
     setInputs([
       { id: 0, value: "q1" },
@@ -271,6 +351,35 @@ export function AfnContextProvider({ children }: AppProviderProps) {
     });
   };
 
+  const clearAll = () => {
+    setAutomatoAccept(WordStatus.IDLE);
+    setEquivalencyState({
+      afdConvertedFromAfn: WordStatus.IDLE,
+      originalAfn: WordStatus.IDLE,
+    });
+
+    setAfdConvertedFromAfn(null);
+    setAlfabetoInputs([{ id: 0, value: "" }]);
+
+    setInputs([{ id: 0, value: "" }]);
+    setEstadoInicial("");
+    setTransicaoInputs([
+      {
+        id: 0,
+        estadoAtualValue: "",
+        simboloEntradaValue: "",
+        estadoDestinoValue: "",
+      },
+    ]);
+    setEstadosDestinoSelecionados([]);
+    setAutomatoAccept(WordStatus.IDLE);
+    setEquivalencyState({
+      afdConvertedFromAfn: WordStatus.IDLE,
+      originalAfn: WordStatus.IDLE,
+    });
+    setMinimizedAfd(undefined);
+  };
+
   const minimizeAfd = async () => {
     if (afdConvertedFromAfn != undefined) {
       const afdMinimized_ = await automatosService.minimizeAfd(
@@ -283,14 +392,20 @@ export function AfnContextProvider({ children }: AppProviderProps) {
   };
 
   const minimizeAfdSemTerConvertidoAntes = async () => {
-    if (afdConvertedFromAfn != undefined) {
-      const afdMinimized_ = await automatosService.minimizeAfd(
-        afdConvertedFromAfn
-      );
-      console.log("minimizado");
-      console.log(afdMinimized_);
-      setMinimizedAfd(afdMinimized_);
-    }
+    const afn = getAfn(
+      alfabetoInputs,
+      inputs,
+      transicaoInputs,
+      estadoInicial,
+      estadosDestinoSelecionados
+    );
+
+    console.log(afn);
+
+    const afdMinimized_ = await automatosService.minimizeAfd(afn);
+    console.log("minimizado");
+    console.log(afdMinimized_);
+    setMinimizedAfd(afdMinimized_);
   };
 
   async function testEquivalency(word: string) {
@@ -349,6 +464,8 @@ export function AfnContextProvider({ children }: AppProviderProps) {
         testEquivalency,
         equivalencyState,
         minimizeAfdSemTerConvertidoAntes,
+        clickFillAutomatoAfd,
+        clearAll,
       }}
     >
       {children}
