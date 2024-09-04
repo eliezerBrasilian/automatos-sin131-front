@@ -11,6 +11,8 @@ export class AutomatoService {
       throw new Error("ocoreu erro ao converter: " + error);
     }
   }
+  ///
+  //
 
   async minimizeAfd(afd: Afn) {
     try {
